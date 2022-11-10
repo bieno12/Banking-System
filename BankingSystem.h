@@ -38,8 +38,8 @@ public:
 	void setMinimumBalance(int minimumBalance);
 	int getMinimumBalance();
 
-	withdraw();
-	deposit();
+	void withdraw();
+	void deposit();
 };
 
 class Client

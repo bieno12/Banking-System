@@ -3,3 +3,11 @@
 
 using namespace std;
 
+BankingApplication::BankingApplication()
+{
+
+}
+void BankingApplication::run()
+{
+
+}
