@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-	BankingApplication app();
-
+	BankingApplication app;
+	// SavingsBankAccount s(5,5);
+	
 	app.run();
 }

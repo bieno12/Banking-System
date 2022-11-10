@@ -6,15 +6,28 @@
 using namespace std;
 
 class Client;
+class BankAccount;
+class SavingsBankAccount;
+class Client
+{
+public:
+	string m_name;
+	string m_address;
+	string m_phoneNumber;
+	int m_accountID;
+	int m_clientID;
+	BankAccount* m_account;
+};
 
 class BankAccount
 {
-private:
+
+public:
 	int m_accountID;
 	int m_balance;
+	int m_clientID;
 	Client* m_owner;
 	virtual void setID(int id);
-public:
 	BankAccount(int intial_balance);
 	BankAccount();
 
@@ -22,41 +35,53 @@ public:
 
 	virtual void setBalance(int balance);
 	virtual int getBalance();
-	
+
+	virtual void setClient(Client*);
+	virtual Client* client();
+
 	virtual void withdraw(int amount);
 	virtual void deposit(int amount);
-
+	virtual string type();
 
 };
 
-class SavingsBankAccount
+class SavingsBankAccount: public BankAccount
 {
 private:
-	int m_minimumBalance;
+	int m_minimumBalance = 1000;
 public:
+	void setBalance(int balance);
 	SavingsBankAccount(int intial_balance, int minimumBalance);
 	void setMinimumBalance(int minimumBalance);
 	int getMinimumBalance();
 
-	void withdraw();
-	void deposit();
-};
+	void setClient(Client*);
+	Client* client();
 
-class Client
-{
-	string m_name;
-	string m_address;
-	string m_phoneNumber;
-	BankAccount* m_account;
+	void withdraw(int amount);
+	void deposit(int amount);
+	string type();
 
 };
+
 
 class BankingApplication
 {
-	vector<BankAccount> m_accounts;
-	vector<Client> m_clients; 
+	int account_counter = 0;
+	int client_counter = 0;
+	vector<BankAccount*> m_accounts;
+	vector<Client*> m_clients; 
 public:
 	BankingApplication();
 	void run();
+private:
+	void register_account();
+	void list_data();
+	void withdraw_money();
+	void deposit_money();
+	void load_data(string clients_file, string accounts_file);
+
+	void save_data(string clients_file, string accounts_file);
+
 };
 #endif
