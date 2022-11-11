@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-static int integer_in()
+int integer_in()
 {
 	string str;
 	getline(cin, str);
@@ -116,7 +116,6 @@ void BankingApplication::load_data(string clients_filename, string accounts_file
 		string line;
 		while(getline(accounts_file, line))
 		{
-			cout << line << endl;
 			BankAccount* new_account;
 			if(line == "savings_account")
 			{
@@ -131,16 +130,24 @@ void BankingApplication::load_data(string clients_filename, string accounts_file
 			}
 
 			getline(accounts_file, line);
-			cout << line << endl;
 
 			new_account->setID(stoi(line));
 			getline(accounts_file, line);
-			cout << line << endl;
 			new_account->setBalance(stoi(line));
 			m_accounts.push_back(new_account);
 		}
 	}
-
+	for(Client* c : m_clients)
+	{
+		for(BankAccount* acc : m_accounts)
+		{
+			if(c->m_accountID == acc->getID())
+			{
+				c->m_account = acc;
+				acc->setClient(c);
+			}
+		}
+	}
 }
 
 
@@ -231,16 +238,65 @@ void BankingApplication::list_data()
 		cout << "Phone Number: " << c->m_phoneNumber << endl; 
 		cout << "Account ID: " << c->m_accountID << " (" << c->m_account->type() << ")\n"; 
 		cout << "Balance: " << c->m_account->getBalance() << endl; 
+		if(c->m_account->type() == "savings_account")
+			cout << "minimum Balance: " << static_cast<SavingsBankAccount*>(c->m_account)->getMinimumBalance() << endl;
 	}
 }	
 
 void BankingApplication::withdraw_money()
 {
+	cout << "Please Enter Account ID (e.g., FCAI-015) =========> ";
+	int id = integer_in();
+	bool found = false;
+	for(auto acc : m_accounts)
+	{
+		if(id == acc->getID())
+		{
+			found = true; 
+			cout << "Account ID: " << id <<endl;
+			cout << "Acocunt Type: " << acc->type() << endl;
+			cout << "Balance: " << acc->getBalance() << endl;
+			cout << "Please Enter The Amount to Withdraw =========> " ;
+			unsigned int amount = integer_in();
+			acc->withdraw(amount);
 
+			cout << "Account ID: " << id <<endl;
+			cout << "Balance: " << acc->getBalance() << endl;
+
+			break;
+		}
+	}
+	if(!found)
+	{
+		cout << "there is no such account\n";
+	}
 
 }
 void BankingApplication::deposit_money()
 {
 
+	cout << "Please Enter Account ID (e.g., FCAI-015) =========> ";
+	int id = integer_in();
+	bool found = false;
+	for(auto acc : m_accounts)
+	{
+		if(id == acc->getID())
+		{
+			found = true; 
+			cout << "Account ID: " << id <<endl;
+			cout << "Acocunt Type: " << acc->type() << endl;
+			cout << "Balance: " << acc->getBalance() << endl;
+			cout << "Please Enter The Amount to Deposit =========> " ;
+			unsigned int amount = integer_in();
+			acc->deposit(amount);
 
+			cout << "Account ID: " << id <<endl;
+			cout << "Balance: " << acc->getBalance() << endl;
+			break;
+		}
+	}
+	if(!found)
+	{
+		cout << "there is no such account\n";
+	}
 }

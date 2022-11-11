@@ -3,6 +3,7 @@
 
 using namespace std;
 
+int integer_in();
 
 //Mohamed's Part
 
@@ -88,27 +89,23 @@ int SavingsBankAccount::getMinimumBalance()
 
 void SavingsBankAccount::withdraw(int amount)
 {   
-    cout<<"Enter amount you want to withdraw: "<<endl;
-    cin>>amount;
     while (amount < 100)
     {
         cout<<"please, it can not be less than 100 LE"<<endl;
         cout<<"Enter amount you want to withdraw: "<<endl;
-        cin>>amount;
+        amount = integer_in();
     }    
-    while (m_balance < amount)
+    while (m_balance - amount < m_minimumBalance)
     {
         cout<<"sorry, it more than you have"<<endl;
         cout<<"Enter amount you want to withdraw: "<<endl;
-        cin>>amount;
+        amount = integer_in();
     }
     
     m_balance -= amount;    
 }
 void SavingsBankAccount::deposit(int amount)
 {
-    cout<<"please, enter amount you want to deposit: "<<endl;
-    cin>>amount;
     m_balance += amount;
 }
 

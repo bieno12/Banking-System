@@ -7,3 +7,7 @@ basic_account
 basic_account
 3
 5321
+savings_account
+50
+4
+1810
