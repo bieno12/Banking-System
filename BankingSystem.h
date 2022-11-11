@@ -1,13 +1,18 @@
 #ifndef BANKING_SYSTEM_H
 #define BANKING_SYSTEM_H
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
+#include <list>
+#include <fstream>
 using namespace std;
 
 class Client;
 class BankAccount;
 class SavingsBankAccount;
+
+
 class Client
 {
 public:
@@ -19,28 +24,29 @@ public:
 	BankAccount* m_account;
 };
 
+
 class BankAccount
 {
-
-public:
+private:
 	int m_accountID;
 	int m_balance;
+public:
 	int m_clientID;
 	Client* m_owner;
-	virtual void setID(int id);
 	BankAccount(int intial_balance);
 	BankAccount();
 
-	virtual int getID();
+	void setID(int id);
+	int getID();
 
-	virtual void setBalance(int balance);
-	virtual int getBalance();
+	void setBalance(int balance);
+	int getBalance();
 
-	virtual void setClient(Client*);
-	virtual Client* client();
+	void setClient(Client*);
+    Client* client();
 
 	virtual void withdraw(int amount);
-	virtual void deposit(int amount);
+	void deposit(int amount);
 	virtual string type();
 
 };
@@ -50,18 +56,12 @@ class SavingsBankAccount: public BankAccount
 private:
 	int m_minimumBalance = 1000;
 public:
-	void setBalance(int balance);
 	SavingsBankAccount(int intial_balance, int minimumBalance);
 	void setMinimumBalance(int minimumBalance);
 	int getMinimumBalance();
 
-	void setClient(Client*);
-	Client* client();
-
 	void withdraw(int amount);
-	void deposit(int amount);
 	string type();
-
 };
 
 

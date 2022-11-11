@@ -11,3 +11,14 @@ savings_account
 50
 4
 1810
+savings_account
+5000
+5
+55
+basic_account
+6
+0
+savings_account
+500
+7
+500
