@@ -125,14 +125,15 @@ void BankingApplication::run()
 		client_counter = max(c->m_accountID, client_counter); 
 	for(BankAccount* a : m_accounts)
 		account_counter = max(a->getID(), client_counter); 
-
+	bool running = true;
 	cout << "Welcome to FCAI Banking Application\n";
-	while(true)
+	while(running)
 	{
 		cout << "1. Create a New Account\n";
 		cout << "2. List Clients and Accounts\n";
 		cout << "3. Withdraw Money\n";
 		cout << "4. Deposit Money \n";
+		cout << "5. Exit\n";
 
 
 		cout << "Please Enter Choice =========> ";
@@ -160,8 +161,21 @@ void BankingApplication::run()
 			case 4:
 				deposit_money();
 			break;
+			case 5:
+				running = false;
+				break;
 		}
 		save_data("clients.txt", "accounts.txt");
+	}
+
+	for(auto c : m_clients)
+	{
+		delete c;
+
+	}
+	for(auto a : m_accounts)
+	{
+		delete a;
 	}
 
 }
